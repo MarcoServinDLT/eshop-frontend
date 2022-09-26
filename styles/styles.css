@@ -1,0 +1,17 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+    -moz-box-sizing: padding-box;       
+    -o-box-sizing: border-box;          
+    -webkit-box-sizing: border-box;     
+}
+
+.product-card:hover {
+    scale: 1.06;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);;
+}
+
+.category-element:hover {
+    text-shadow: 2px 2px 2px 2px rgba(255, 255, 255, 0.5);
+    font-weight: bold;
+}
