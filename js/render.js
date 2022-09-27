@@ -7,32 +7,43 @@
     const urlParams = new URLSearchParams(window.location.search)
 
     // Getting the html elements. //
-    let result_container = document.getElementById('products_container')
-    let search_button = document.getElementById('search_button')
-    let category_list = document.getElementById('category_list')
+    const result_container = document.getElementById('products_container')
+    const search_bar = document.getElementById('search_bar')
+    const category_list = document.getElementById('category_list')
+    const container = document.getElementById('container')
+    
 
     // Get url params //
-    if(urlParams.has('category'))
-        url_request += `category/${urlParams.get('category')}/`
-    else
-        url_request = `${base_url}products/`
-    if(urlParams.has('product_name'))
-        url_request += urlParams.get('product_name')
+    const product_search = urlParams.get('product_name')
+    const category_filter = parseInt(urlParams.get('category')) ?? 0
 
-    async function getProducts(){
-        console.log(url_request)
-        const data = await httpRequest(url_request)
-        let product_list = ''
-        data.data.forEach(element =>{
-            product_list += createProductCardElememt(element)
-        })
-        result_container.innerHTML = product_list
+    // Configuring the url request. //
+    url_request += category_filter ? `category/${urlParams.get('category')}/` : 'products/'
+    if(product_search) {
+        url_request += product_search
+        search_bar.value = product_search
     }
 
+    /* Method to get and render all products. */
+    async function getProducts(){
+        console.log(url_request)
+        try{
+            const data = await httpRequest(url_request)
+            let product_list = ''
+            data.data.forEach(element =>{
+                product_list += createProductCardElememt(element)
+            })
+            result_container.innerHTML = product_list
+        } catch(error) {
+            console.log(error)
+            container.innerHTML = '<h1 class="text-center text-secondary">Producto no encontrado.</h1>'
+        }
+    }
 
+    /* Method to get and render all categories. */
     async function getCategories(){
         const data = await httpRequest(url_categories)
-        let list = createCaetgoryListElement(0, 'TODAS')
+        let list = createCaetgoryListElement({id:0, name:'TODAS'})
         data.data.forEach(element => {
             list += createCaetgoryListElement(element)
         });
@@ -41,7 +52,9 @@
 
     // Rendering the data. //
     getProducts()
-    getCategories()
-
+    getCategories().then( () => 
+        category_list.selectedIndex = category_filter
+    )
+    
 
 }())
