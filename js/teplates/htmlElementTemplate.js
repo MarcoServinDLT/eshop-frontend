@@ -4,11 +4,8 @@
  * @returns A string with the HTML structure to render the element.
  */
 function createCaetgoryListElement(category) {
-    return `<li>
-        <a href="?category=${category.id}" class="nav-link text-white category-element">
-            ${category.category_name.toUpperCase()}
-        </a>
-    </li>`
+    const name = category.name
+    return `<option value="${category.id}">${name.toUpperCase()}</option>`
 }
 
 /**
@@ -19,17 +16,18 @@ function createCaetgoryListElement(category) {
 function createProductCardElememt(product) {
     const current_price = (product.price * (100 - product.discount)) / 100 ?? product.price
     const original_price = product.discount > 0 ? `<span class="small text-secondary"><s>$ ${product.price}</s></span>` : ''
+    const image = product.url_image ? product.url_image :  "./images/not-found.jpg"
     return `<div class="col">
-        <div class="card shadow-sm product-card">
-            <img src="${product.url_image}" alt="Image" class="card-img-top">
-            <div class="card-body">
-                <h5 class="card-title">${product.name}</h5>
-                <h6 class="card-subtitle text-secondary">${product.category_name}</h6>
-                <hr>
-                <h6 class="card-title text-end">
-                    $ ${current_price}
-                    ${original_price}
-                </h6>
+        <div class="card h-100 product-card">
+            <img src="${image}" alt="Image" class="card-img-top">
+            <div class="card-footer mt-auto">
+                    <h5 class="card-title">${product.name}</h5>
+                    <h6 class="card-subtitle text-secondary">${product.category_name}</h6>
+                    <hr>
+                    <h5 class="card-title text-end">
+                        $ ${current_price}
+                        ${original_price}
+                    </h6>
             </div>
         </div>
     </div>`
