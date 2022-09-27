@@ -1,8 +1,8 @@
 (function(){
 
     // Definition of url elements. //
-    const base_url = 'http://localhost:3000/api/'
-    const url_categories = 'http://localhost:3000/api/categories'
+    const base_url = 'https://e-shop-back-end-example.herokuapp.com/api/'
+    const url_categories = 'https://e-shop-back-end-example.herokuapp.com/api/categories'
     let url_request = base_url
     const urlParams = new URLSearchParams(window.location.search)
 
